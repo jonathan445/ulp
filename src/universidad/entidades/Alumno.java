@@ -28,6 +28,7 @@ public class Alumno {
         this.id = -1;
         this.nombre = nombre;
         this.fecNac = fecNac;
+        this.activo = activo;
     }
     
     public Alumno(){ }

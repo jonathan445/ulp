@@ -6,12 +6,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class AlumnoData {
-      
     public void altaAlumno(Alumno alumno){
         try {
-            String sql = "INSERT INTO alumno (nombre, fecNac, activo) VALUES ('" + alumno.getNombre() + "', '" + alumno.getFecNac() + "', " + alumno.getActivo() + ");";
+            String sql = "INSERT INTO alumno (nombre, fecNac, activo) VALUES ('" + alumno.getNombre() + "', '" + alumno.getFecNac() + "', " + (alumno.getActivo() ? "1" : "0") + ");";
             Statement s = Conexion.get().createStatement();
-            ResultSet rs = s.executeQuery(sql);
+            s.execute(sql);
            
             s.close();
         } catch (SQLException e) {
@@ -20,7 +19,7 @@ public class AlumnoData {
     }
     
     public ArrayList<Alumno> obtenerAlumnos(){
-        ArrayList<Alumno> resultados = new ArrayList<Alumno>();
+        ArrayList<Alumno> resultados = new ArrayList<>();
         
         try {
             String sql = "SELECT * FROM alumno";
@@ -30,6 +29,7 @@ public class AlumnoData {
             while (rs.next()){
                 resultados.add(new Alumno(rs.getInt("ID"), rs.getString("NOMBRE"), rs.getDate("FECNAC").toLocalDate(), rs.getBoolean("ACTIVO")));
             }
+            s.close();
         } catch (SQLException e){
             System.out.println("Error:" + e.getMessage());
         }
@@ -42,6 +42,7 @@ public class AlumnoData {
             String sql = "DELETE FROM alumno WHERE id = " + id + ";";
             Statement s = Conexion.get().createStatement();
             s.executeQuery(sql);
+            
             s.close();
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
@@ -50,9 +51,10 @@ public class AlumnoData {
     
     public void actualizarAlumno(int id, Alumno alumno){
         try {
-            String sql = "UPDATE alumno SET nombre = " + alumno.getNombre() + ", fecNac = " + alumno.getFecNac() + " , activo = " + alumno.getActivo() + " WHERE id = " + id + ";";
+            String sql = "UPDATE alumno SET nombre = " + alumno.getNombre() + ", fecNac = " + alumno.getFecNac() + " , activo = " + (alumno.getActivo() ? "1" : "0") + " WHERE id = " + id + ";";
             Statement s = Conexion.get().createStatement();
             s.execute(sql);
+            
             s.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
