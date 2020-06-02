@@ -1,34 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package universidad;
-import java.sql.*;
-/**
- *
- * @author jpere
- */
+import java.time.LocalDate;
+import java.time.Month;
+import universidad.data.*;
+import universidad.entidades.*;
+
 public class Universidad {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
-
         final String HOST = "localhost:3306";
         final String DB = "universidad";
         final String URL = "jdbc:mariadb://" + HOST + "/" + DB;
         final String USUARIO = "root";
         final String CLAVE = "";
-
-        try{
-            Connection con = DriverManager.getConnection(URL, USUARIO, CLAVE);
-            System.out.println("¡Conexión exitosa!");
-        } catch (SQLException e){
-            System.out.println("Error: " + e.getMessage());
+        
+        Conexion con = new Conexion(URL, USUARIO, CLAVE);
+        
+        AlumnoData ad = new AlumnoData();
+        // Agregar alumnos
+        ad.altaAlumno(new Alumno("True", LocalDate.of(2000, Month.MAY, 15), true));
+        ad.altaAlumno(new Alumno("False", LocalDate.of(2000, Month.MAY, 15), false));
+        // Listar todos los alumnos
+        for(Alumno al : ad.obtenerAlumnos()){
+            System.out.println("ID" + al.getId());
         }
+        // Eliminar alumno
+        ad.bajaAlumno(24);
     }
-    
 }
