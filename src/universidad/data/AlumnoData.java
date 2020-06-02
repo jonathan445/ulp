@@ -6,13 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class AlumnoData {
-    
-    private Connection connection = null;
-    
-    public AlumnoData() {
-       
-    }
-    
+      
     public void altaAlumno(Alumno alumno){
         try {
             String sql = "INSERT INTO alumno (nombre, fecNac, activo) VALUES ('" + alumno.getNombre() + "', '" + alumno.getFecNac() + "', " + alumno.getActivo() + ");";
@@ -65,7 +59,7 @@ public class AlumnoData {
         }
     }
     
-    public Alumno buscarAlumno(int id){
+    public Alumno obtenerAlumno(int id){
         Alumno alumno = null;
         try {
             String sql = "SELECT * FROM alumno WHERE id = " + id + ";";

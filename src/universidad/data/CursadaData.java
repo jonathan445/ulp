@@ -18,21 +18,14 @@ import universidad.entidades.Materia;
  * @author Usuario
  */
 public class CursadaData {
-     private Connection connection = null;
-     private Conexion conexion;
 
-    public CursadaData(Conexion conexion) {
-        this.conexion=conexion;
-        connection = conexion.get();
-    }
-    
-    
-    public void guardarCursada(Cursada cursada){
+ 
+    public void altaCursada(Cursada cursada){
         try {
             
             String sql = "INSERT INTO cursada (idAlumno, idMateria, nota) VALUES ( ? , ? , ? );";
 
-            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            Conexion.get().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, cursada.getAlumno().getId());
             statement.setInt(2, cursada.getMateria().getId());
             statement.setInt(3, cursada.getNota());
