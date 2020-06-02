@@ -1,56 +1,29 @@
 package universidad.data;
 
 import universidad.entidades.Alumno;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import universidad.Conexion;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import universidad.Conexion;
 
-/**
- *
- * @author alejo
- */
 public class AlumnoData {
-    private Connection con;
-
-    public AlumnoData(Conexion conexion) {
+    public boolean altaAlumno(Alumno alumno){
         try {
-            con = conexion.getConexion();
-        } catch (SQLException ex) {
-            System.out.println("Error al abrir al obtener la conexion");
-        }
-    }
-    
-    
-    public void guardarAlumno(Alumno alumno){
-        try {
+            System.out.println("Nombre: " + alumno.getNombre());
+            System.out.println("FecNac: " + alumno.getFecNac());
+            System.out.println("Activo: " + alumno.getActivo() + ((true ? 1 : 0)));
+            String sql = "INSERT INTO alumno (nombre, fecNac, activo) VALUES ('" + alumno.getNombre() + "', '" + alumno.getFecNac() + "', '" + (alumno.getActivo() ? 0 : 1) + "');";
+            Statement s = Conexion.get().createStatement();
+            ResultSet rs = s.executeQuery(sql);
             
-            String sql = "INSERT INTO alumno (nombre, fecNac, activo) VALUES ( ? , ? , ? );";
-
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, alumno.getNombre());
-            ps.setDate(2, Date.valueOf(alumno.getFecNac()));
-            ps.setBoolean(3, alumno.getActivo());
-            
-            ps.executeUpdate();
-            
-            ResultSet rs = ps.getGeneratedKeys();
-
-            if (rs.next()) {
-                alumno.setId(rs.getInt(1));
-            } else {
-                System.out.println("No se pudo obtener el id luego de insertar un alumno");
+            if (rs.first()){
+                s.close();
+                return true;
             }
-            ps.close();
-    
-        } catch (SQLException ex) {
-            System.out.println("Error al insertar un alumno: " + ex.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
+        return false;
     }
     
     public List<Alumno> obtenerAlumnos(){
@@ -59,7 +32,7 @@ public class AlumnoData {
 
         try {
             String sql = "SELECT * FROM alumno;";
-            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps = Conexion.get().prepareStatement(sql);
             ResultSet resultSet = ps.executeQuery();
             Alumno alumno;
             while(resultSet.next()){
@@ -85,7 +58,7 @@ public class AlumnoData {
             
             String sql = "DELETE FROM alumno WHERE id =?;";
 
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = Conexion.get().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, id);
                       
             ps.executeUpdate();
@@ -106,7 +79,7 @@ public class AlumnoData {
             String sql = "UPDATE alumno SET nombre = ?, fecNac = ? , "
                     + "activo =? WHERE id = ?;";
 
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = Conexion.get().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, alumno.getNombre());
             ps.setDate(2, Date.valueOf(alumno.getFecNac()));
             ps.setBoolean(3, alumno.getActivo());
@@ -128,7 +101,7 @@ public class AlumnoData {
             
             String sql = "SELECT * FROM alumno WHERE id =?;";
 
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = Conexion.get().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, id);
            
             
