@@ -9,9 +9,10 @@ public class AlumnoData {
       
     public void altaAlumno(Alumno alumno){
         try {
-            String sql = "INSERT INTO alumno (nombre, fecNac, activo) VALUES ('" + alumno.getNombre() + "', '" + alumno.getFecNac() + "', " + alumno.getActivo() + ");";
+            String sql = "INSERT INTO alumno (nombre, fecNac, activo) VALUES ('" + alumno.getNombre() + "', '" + alumno.getFecNac() + "', " + (alumno.getActivo() ? "1" : "0") + ");";
+            System.out.println(sql);
             Statement s = Conexion.get().createStatement();
-            ResultSet rs = s.executeQuery(sql);
+            s.execute(sql);
            
             s.close();
         } catch (SQLException e) {
@@ -20,7 +21,7 @@ public class AlumnoData {
     }
     
     public ArrayList<Alumno> obtenerAlumnos(){
-        ArrayList<Alumno> resultados = new ArrayList<Alumno>();
+        ArrayList<Alumno> resultados = new ArrayList<>();
         
         try {
             String sql = "SELECT * FROM alumno";
@@ -50,7 +51,7 @@ public class AlumnoData {
     
     public void actualizarAlumno(int id, Alumno alumno){
         try {
-            String sql = "UPDATE alumno SET nombre = " + alumno.getNombre() + ", fecNac = " + alumno.getFecNac() + " , activo = " + alumno.getActivo() + " WHERE id = " + id + ";";
+            String sql = "UPDATE alumno SET nombre = " + alumno.getNombre() + ", fecNac = " + alumno.getFecNac() + " , activo = " + (alumno.getActivo() ? "1" : "0") + " WHERE id = " + id + ";";
             Statement s = Conexion.get().createStatement();
             s.execute(sql);
             s.close();
