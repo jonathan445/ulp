@@ -20,6 +20,7 @@ import universidad.entidades.Materia;
 public class CursadaData {
 
  AlumnoData ad = new AlumnoData();
+ MateriaData md = new MateriaData();
     public void altaCursada(Cursada cursada){
         try {
             
@@ -61,9 +62,8 @@ public class CursadaData {
                 cursada.setId(resultSet.getInt("id"));
                 
                 ad.obtenerAlumno(resultSet.getInt("idAlumno"));
-                
-                Materia m=buscarMateria(resultSet.getInt("idMateria"));
-                cursada.setMateria(m);
+               
+                md.obtenerMateria(resultSet.getInt("idMateria"));
                 cursada.setNota(resultSet.getInt("nota"));
                
 
@@ -92,9 +92,7 @@ public class CursadaData {
                 cursada.setId(resultSet.getInt("id"));
                 
                 ad.obtenerAlumno(resultSet.getInt("idAlumno"));
-                
-                Materia m=buscarMateria(resultSet.getInt("idMateria"));
-                cursada.setMateria(m);
+                md.obtenerMateria(resultSet.getInt("idMateria"));
                 cursada.setNota(resultSet.getInt("nota"));
                
 
@@ -110,12 +108,6 @@ public class CursadaData {
     }
     
     
-    public Materia buscarMateria(int id){
-    
-        MateriaData md = new MateriaData();
-        return md.buscarMateria(id);
-    
-    }
     
     public List<Materia> obtenerCursadasMateria(int idMateria)
     {
