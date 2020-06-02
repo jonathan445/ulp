@@ -6,11 +6,9 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class AlumnoData {
-      
     public void altaAlumno(Alumno alumno){
         try {
             String sql = "INSERT INTO alumno (nombre, fecNac, activo) VALUES ('" + alumno.getNombre() + "', '" + alumno.getFecNac() + "', " + (alumno.getActivo() ? "1" : "0") + ");";
-            System.out.println(sql);
             Statement s = Conexion.get().createStatement();
             s.execute(sql);
            
@@ -31,6 +29,7 @@ public class AlumnoData {
             while (rs.next()){
                 resultados.add(new Alumno(rs.getInt("ID"), rs.getString("NOMBRE"), rs.getDate("FECNAC").toLocalDate(), rs.getBoolean("ACTIVO")));
             }
+            s.close();
         } catch (SQLException e){
             System.out.println("Error:" + e.getMessage());
         }
@@ -43,6 +42,7 @@ public class AlumnoData {
             String sql = "DELETE FROM alumno WHERE id = " + id + ";";
             Statement s = Conexion.get().createStatement();
             s.executeQuery(sql);
+            
             s.close();
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
@@ -54,6 +54,7 @@ public class AlumnoData {
             String sql = "UPDATE alumno SET nombre = " + alumno.getNombre() + ", fecNac = " + alumno.getFecNac() + " , activo = " + (alumno.getActivo() ? "1" : "0") + " WHERE id = " + id + ";";
             Statement s = Conexion.get().createStatement();
             s.execute(sql);
+            
             s.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
