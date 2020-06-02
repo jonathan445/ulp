@@ -22,12 +22,8 @@ public class CursadaData {
      private Conexion conexion;
 
     public CursadaData(Conexion conexion) {
-        try {
-            this.conexion=conexion;
-            connection = conexion.getConexion();
-        } catch (SQLException ex) {
-            System.out.println("Error al abrir al obtener la conexion");
-        }
+        this.conexion=conexion;
+        connection = conexion.get();
     }
     
     
@@ -125,7 +121,7 @@ public class CursadaData {
     
     public Alumno buscarAlumno(int id){
     
-        AlumnoData ad = new AlumnoData(conexion);
+        AlumnoData ad = new AlumnoData();
         
         return ad.buscarAlumno(id);
         
@@ -133,7 +129,7 @@ public class CursadaData {
     
     public Materia buscarMateria(int id){
     
-        MateriaData md = new MateriaData(conexion);
+        MateriaData md = new MateriaData();
         return md.buscarMateria(id);
     
     }

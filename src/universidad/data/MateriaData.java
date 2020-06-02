@@ -17,12 +17,10 @@ import universidad.entidades.Materia;
 public class MateriaData {
     private Connection connection = null;
 
-    public MateriaData(Conexion conexion) {
-        try {
-            connection = conexion.getConexion();
-        } catch (SQLException ex) {
-            System.out.println("Error al abrir al obtener la conexion");
-        }
+    
+    public MateriaData() {
+        
+        
     }
     
     

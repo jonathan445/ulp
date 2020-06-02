@@ -6,13 +6,19 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class AlumnoData {
+    
+    private Connection connection = null;
+    
+    public AlumnoData() {
+       
+    }
+    
     public void altaAlumno(Alumno alumno){
         try {
             String sql = "INSERT INTO alumno (nombre, fecNac, activo) VALUES ('" + alumno.getNombre() + "', '" + alumno.getFecNac() + "', " + alumno.getActivo() + ");";
             Statement s = Conexion.get().createStatement();
             ResultSet rs = s.executeQuery(sql);
-            
-            
+           
             s.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
