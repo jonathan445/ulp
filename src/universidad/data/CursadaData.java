@@ -19,13 +19,13 @@ import universidad.entidades.Materia;
  */
 public class CursadaData {
 
- 
+ AlumnoData ad = new AlumnoData();
     public void altaCursada(Cursada cursada){
         try {
             
             String sql = "INSERT INTO cursada (idAlumno, idMateria, nota) VALUES ( ? , ? , ? );";
 
-            Conexion.get().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = Conexion.get().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, cursada.getAlumno().getId());
             statement.setInt(2, cursada.getMateria().getId());
             statement.setInt(3, cursada.getNota());
@@ -53,15 +53,14 @@ public class CursadaData {
 
         try {
             String sql = "SELECT * FROM cursada;";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = Conexion.get().prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
             Cursada cursada;
             while(resultSet.next()){
                 cursada = new Cursada();
                 cursada.setId(resultSet.getInt("id"));
                 
-                Alumno a=buscarAlumno(resultSet.getInt("idAlumno"));
-                cursada.setAlumno(a);
+                ad.obtenerAlumno(resultSet.getInt("idAlumno"));
                 
                 Materia m=buscarMateria(resultSet.getInt("idMateria"));
                 cursada.setMateria(m);
@@ -78,22 +77,21 @@ public class CursadaData {
         
         return cursadas;
     }
-    public List<Cursada> obtenerCursadasXAlumno(int id){
+    public List<Cursada> obtenerCursadasAlumno(int idAlumno){
         List<Cursada> cursadas = new ArrayList<Cursada>();
             
 
         try {
             String sql = "SELECT * FROM cursada WHERE idAlumno = ?;";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1,id);
+            PreparedStatement statement = Conexion.get().prepareStatement(sql);
+            statement.setInt(1,idAlumno);
             ResultSet resultSet = statement.executeQuery();
             Cursada cursada;
             while(resultSet.next()){
                 cursada = new Cursada();
                 cursada.setId(resultSet.getInt("id"));
                 
-                Alumno a=buscarAlumno(resultSet.getInt("idAlumno"));
-                cursada.setAlumno(a);
+                ad.obtenerAlumno(resultSet.getInt("idAlumno"));
                 
                 Materia m=buscarMateria(resultSet.getInt("idMateria"));
                 cursada.setMateria(m);
@@ -110,15 +108,7 @@ public class CursadaData {
         
         return cursadas;
     }
-
     
-    public Alumno buscarAlumno(int id){
-    
-        AlumnoData ad = new AlumnoData();
-        
-        return ad.buscarAlumno(id);
-        
-    }
     
     public Materia buscarMateria(int id){
     
@@ -127,14 +117,14 @@ public class CursadaData {
     
     }
     
-    public List<Materia> obtenerMateriasCursadas(int id)
+    public List<Materia> obtenerCursadasMateria(int idMateria)
     {
         List<Materia> materias = new ArrayList<Materia>(); 
         try {
             String sql = "SELECT idMateria, nombre FROM cursada, materia WHERE cursada.idMateria = materia.id\n" +
                          "and cursada.idAlumno = ?;";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
+            PreparedStatement statement = Conexion.get().prepareStatement(sql);
+            statement.setInt(1, idMateria);
             ResultSet resultSet = statement.executeQuery();
             Materia materia;
             while(resultSet.next()){
@@ -150,42 +140,15 @@ public class CursadaData {
         
         return materias;
     }
-    
-    public List<Materia> obtenerMateriasNOCursadas(int id)
-    {
-        List<Materia> materias = new ArrayList<Materia>();
-            
-        try {
-            String sql = "Select * from materia where id not in "
-                    + "(select idMateria from cursada where idAlumno =?);";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            Materia materia;
-            while(resultSet.next()){
-                materia = new Materia();
-                materia.setId(resultSet.getInt("id"));
-                materia.setNombre(resultSet.getString("nombre"));
-                materias.add(materia);
-            }      
-            statement.close();
-        } catch (SQLException ex) {
-            System.out.println("Error al obtener los alumnos: " + ex.getMessage());
-        }
         
-        
-        return materias;
-      
-    }
     
-    
-    public void borrarCursadaDeUnaMateriaDeunAlumno(int idAlumno,int idMateria)
+    public void bajaCursada(int idAlumno,int idMateria)
     {
         try {
             
             String sql = "DELETE FROM cursada WHERE idAlumno =? and idMateria =?;";
 
-            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = Conexion.get().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, idAlumno);
             statement.setInt(2, idMateria);
            
@@ -202,13 +165,13 @@ public class CursadaData {
     }
     
     
-    public void actualizarNotaCursada(int idAlumno,int idMateria, int nota)
+    public void actualizarCursada(int idAlumno,int idMateria, int nota)
     {
         try {
             
             String sql = "UPDATE cursada SET nota = ? WHERE idAlumno =? and idMateria =?;";
 
-            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = Conexion.get().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1,nota);
             statement.setInt(2, idAlumno);
             statement.setInt(3, idMateria);
