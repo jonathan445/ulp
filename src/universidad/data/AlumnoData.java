@@ -6,16 +6,20 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class AlumnoData {
-    public void altaAlumno(Alumno alumno){
+    public Alumno altaAlumno(Alumno alumno){
         try {
             String sql = "INSERT INTO alumno (nombre, fecNac, activo) VALUES ('" + alumno.getNombre() + "', '" + alumno.getFecNac() + "', " + (alumno.getActivo() ? "1" : "0") + ");";
             Statement s = Conexion.get().createStatement();
-            s.execute(sql);
-           
+            s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = s.getGeneratedKeys();
+            
+            if (rs.first())
+                alumno.setId(rs.getInt(1));
             s.close();
         } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error al insertar alumno: " + e.getMessage());
         }
+        return alumno;
     }
     
     public ArrayList<Alumno> obtenerAlumnos(){
@@ -65,7 +69,6 @@ public class AlumnoData {
         Alumno alumno = null;
         try {
             String sql = "SELECT * FROM alumno WHERE id = " + id + ";";
-
             Statement s = Conexion.get().createStatement();
             ResultSet rs = s.executeQuery(sql);
             

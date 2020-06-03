@@ -6,16 +6,20 @@ import universidad.Conexion;
 import universidad.entidades.Materia;
 
 public class MateriaData {
-    public void altaMateria(Materia materia){
+    public Materia altaMateria(Materia materia){
         try {
-            String sql = "INSERT INTO materia (nombre) VALUES (" + materia.getNombre() + ");";
+            String sql = "INSERT INTO materia (nombre) VALUES ('" + materia.getNombre() + "');";
             Statement s = Conexion.get().createStatement();
-            s.execute(sql);
+            s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+            ResultSet rs = s.getGeneratedKeys();
             
+            if (rs.first())
+                materia.setId(rs.getInt(1));
             s.close();
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
+        return materia;
     }
     
     public ArrayList<Materia> obtenerMaterias(){

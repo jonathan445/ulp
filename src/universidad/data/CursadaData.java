@@ -1,57 +1,34 @@
-
 package universidad.data;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import universidad.Conexion;
-import universidad.entidades.Alumno;
-import universidad.entidades.Cursada;
-import universidad.entidades.Materia;
+import universidad.entidades.*;
 
-/**
- *
- * @author Usuario
- */
 public class CursadaData {
 
- AlumnoData ad = new AlumnoData();
- MateriaData md = new MateriaData();
-    public void altaCursada(Cursada cursada){
+    public Cursada altaCursada(Cursada cursada){
         try {
+            String sql = "INSERT INTO cursada (IDMATERIA, IDALUMNO, NOTA) VALUES (" + cursada.getMateria().getId() + " , " + cursada.getAlumno().getId() + ", " + cursada.getNota() + ");";
+            Statement s = Conexion.get().createStatement();
+            s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS); 
+            ResultSet rs = s.getGeneratedKeys();
             
-            String sql = "INSERT INTO cursada (idAlumno, idMateria, nota) VALUES ( ? , ? , ? );";
-
-            PreparedStatement statement = Conexion.get().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, cursada.getAlumno().getId());
-            statement.setInt(2, cursada.getMateria().getId());
-            statement.setInt(3, cursada.getNota());
-            
-            
-            statement.executeUpdate();
-            
-            ResultSet rs = statement.getGeneratedKeys();
-
-            if (rs.next()) {
+            if (rs.first())
                 cursada.setId(rs.getInt(1));
-            } else {
-                System.out.println("No se pudo obtener el id luego de insertar un alumno");
-            }
-            statement.close();
-    
+            s.close();
         } catch (SQLException ex) {
-            System.out.println("Error al insertar un alumno: " + ex.getMessage());
+            System.out.println("Error al insertar una cursada: " + ex.getMessage());
         }
+        return cursada;
     }
     
     public List<Cursada> obtenerCursadas(){
         List<Cursada> cursadas = new ArrayList<Cursada>();
-            
-
+        
+        AlumnoData ad = new AlumnoData();
+        MateriaData md = new MateriaData();
         try {
             String sql = "SELECT * FROM cursada;";
             PreparedStatement statement = Conexion.get().prepareStatement(sql);
@@ -71,16 +48,17 @@ public class CursadaData {
             }      
             statement.close();
         } catch (SQLException ex) {
-            System.out.println("Error al obtener los alumnos: " + ex.getMessage());
+            System.out.println("Error al obtener las cursadas: " + ex.getMessage());
         }
         
         
         return cursadas;
     }
     public List<Cursada> obtenerCursadasAlumno(int idAlumno){
-        List<Cursada> cursadas = new ArrayList<Cursada>();
-            
-
+        List<Cursada> cursadas = new ArrayList<>();
+        
+        AlumnoData ad = new AlumnoData();
+        MateriaData md = new MateriaData();
         try {
             String sql = "SELECT * FROM cursada WHERE idAlumno = ?;";
             PreparedStatement statement = Conexion.get().prepareStatement(sql);
@@ -89,48 +67,47 @@ public class CursadaData {
             Cursada cursada;
             while(resultSet.next()){
                 cursada = new Cursada();
-                cursada.setId(resultSet.getInt("id"));
                 
-                ad.obtenerAlumno(resultSet.getInt("idAlumno"));
-                md.obtenerMateria(resultSet.getInt("idMateria"));
+                cursada.setId(resultSet.getInt("ID"));
+                cursada.setAlumno(ad.obtenerAlumno(resultSet.getInt("idAlumno")));
+                cursada.setMateria(md.obtenerMateria(resultSet.getInt("idMateria")));
                 cursada.setNota(resultSet.getInt("nota"));
-               
 
                 cursadas.add(cursada);
             }      
             statement.close();
         } catch (SQLException ex) {
-            System.out.println("Error al obtener los alumnos: " + ex.getMessage());
+            System.out.println("Error al obtener las cursadas del alumno: " + ex.getMessage());
         }
-        
         
         return cursadas;
     }
     
-    
-    
-    public List<Materia> obtenerCursadasMateria(int idMateria)
-    {
-        List<Materia> materias = new ArrayList<Materia>(); 
+    public List<Cursada> obtenerCursadasMateria(int idMateria){
+        List<Cursada> cursadas = new ArrayList<>(); 
+        
+        AlumnoData ad = new AlumnoData();
+        MateriaData md = new MateriaData();
         try {
-            String sql = "SELECT idMateria, nombre FROM cursada, materia WHERE cursada.idMateria = materia.id\n" +
-                         "and cursada.idAlumno = ?;";
+            String sql = "SELECT * FROM cursada WHERE IDMATERIA = ?";
             PreparedStatement statement = Conexion.get().prepareStatement(sql);
             statement.setInt(1, idMateria);
-            ResultSet resultSet = statement.executeQuery();
-            Materia materia;
-            while(resultSet.next()){
-                materia = new Materia();
-                materia.setId(resultSet.getInt("idMateria"));
-                materia.setNombre(resultSet.getString("nombre"));
-                materias.add(materia);
+            ResultSet rs = statement.executeQuery();
+            Cursada cursada;
+            while(rs.next()){
+                cursada = new Cursada();
+                cursada.setAlumno(ad.obtenerAlumno(rs.getInt("IDALUMNO")));
+                cursada.setMateria(md.obtenerMateria(rs.getInt("IDMATERIA")));
+                cursada.setNota(rs.getInt("NOTA"));
+                
+                cursadas.add(cursada);
             }      
             statement.close();
         } catch (SQLException ex) {
-            System.out.println("Error al obtener los alumnos: " + ex.getMessage());
+            System.out.println("Error al obtener las cursadas de la materia: " + ex.getMessage());
         }
         
-        return materias;
+        return cursadas;
     }
         
     
@@ -151,7 +128,7 @@ public class CursadaData {
             statement.close();
     
         } catch (SQLException ex) {
-            System.out.println("Error al insertar un alumno: " + ex.getMessage());
+            System.out.println("Error al eliminar una cursada: " + ex.getMessage());
         }
        
     }
@@ -161,7 +138,7 @@ public class CursadaData {
     {
         try {
             
-            String sql = "UPDATE cursada SET nota = ? WHERE idAlumno =? and idMateria =?;";
+            String sql = "UPDATE cursada SET nota = ? WHERE idAlumno = ? and idMateria =?;";
 
             PreparedStatement statement = Conexion.get().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1,nota);
@@ -175,7 +152,7 @@ public class CursadaData {
             statement.close();
     
         } catch (SQLException ex) {
-            System.out.println("Error al insertar un alumno: " + ex.getMessage());
+            System.out.println("Error al actualizar una cursada: " + ex.getMessage());
         }
       
     }
