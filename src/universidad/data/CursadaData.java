@@ -38,14 +38,44 @@ public class CursadaData {
                 cursada = new Cursada();
                 cursada.setId(resultSet.getInt("id"));
                 
-                ad.obtenerAlumno(resultSet.getInt("idAlumno"));
-               
-                md.obtenerMateria(resultSet.getInt("idMateria"));
+                cursada.setAlumno(ad.obtenerAlumno(resultSet.getInt("idAlumno")));
+                cursada.setMateria(md.obtenerMateria(resultSet.getInt("idMateria")));
                 cursada.setNota(resultSet.getInt("nota"));
                
-
                 cursadas.add(cursada);
             }      
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al obtener las cursadas: " + ex.getMessage());
+        }
+        
+        
+        return cursadas;
+    }
+    
+    public List<Cursada> obtenerCursadas(int idAlumno, int idMateria){
+        List<Cursada> cursadas = new ArrayList<Cursada>();
+        
+        AlumnoData ad = new AlumnoData();
+        MateriaData md = new MateriaData();
+        try {
+            String sql = "SELECT * FROM cursada WHERE idAlumno = " + idAlumno + " AND idMateria = " + idMateria + ";";
+            System.out.println(sql);
+            
+            PreparedStatement statement = Conexion.get().prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            
+            Cursada cursada;
+            while(resultSet.next()){
+                cursada = new Cursada();
+                cursada.setId(resultSet.getInt("id"));
+                
+                cursada.setAlumno(ad.obtenerAlumno(resultSet.getInt("idAlumno")));
+                cursada.setMateria(md.obtenerMateria(resultSet.getInt("idMateria")));
+                cursada.setNota(resultSet.getInt("nota"));
+               
+                cursadas.add(cursada);
+            }   
             statement.close();
         } catch (SQLException ex) {
             System.out.println("Error al obtener las cursadas: " + ex.getMessage());

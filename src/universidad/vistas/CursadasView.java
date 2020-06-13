@@ -42,7 +42,6 @@ public class CursadasView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jTFID = new javax.swing.JTextField();
@@ -50,10 +49,8 @@ public class CursadasView extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jCBMaterias = new javax.swing.JComboBox<>();
 
+        setTitle("Cursadas");
         setName(""); // NOI18N
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Cursadas");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,31 +79,25 @@ public class CursadasView extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(169, 169, 169)
-                        .addComponent(jLabel1))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jTFID, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jCBMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jBBuscar)
-                .addGap(63, 63, 63))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTFID)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCBMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBBuscar)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBBuscar)
                     .addComponent(jTFID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -114,7 +105,7 @@ public class CursadasView extends javax.swing.JInternalFrame {
                     .addComponent(jCBMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -122,20 +113,43 @@ public class CursadasView extends javax.swing.JInternalFrame {
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
         List<Cursada> resultados = new ArrayList<>();
-        int idAlumno = Integer.parseInt(jTFID.getText());
-        resultados = cd.obtenerCursadasAlumno(idAlumno);
         
+        int idAlumno = Integer.parseInt(jTFID.getText().equals("") ? "-1" : jTFID.getText());
         int idMateria = ((Materia)jCBMaterias.getSelectedItem()).getId();
         
+        for (int i = dtf.getRowCount(); i > 0; i--){
+            dtf.removeRow(i-1);
+        }
+        
+            // Buscar todas las cursadas
+        if (idMateria == -1 && idAlumno == -1){
+            resultados = cd.obtenerCursadas();
+        }
+            // Buscar cursadas por alumno y por materia
+        if (idMateria != -1 && idAlumno != -1){
+            resultados = cd.obtenerCursadas(idAlumno, idMateria);
+        } 
+            // Buscar cursadas por materia
+        if (idMateria != -1 && idAlumno == -1){
+            resultados = cd.obtenerCursadasMateria(idMateria);
+        }
+            // Buscar cursadas por alumno
+        if (idMateria == -1 && idAlumno != -1){
+            resultados = cd.obtenerCursadasAlumno(idAlumno);
+        }
+        
         for (Cursada c : resultados){
+            System.out.println(c.getAlumno().getNombre());
             dtf.addRow(new Object[]{c.getAlumno().getNombre(), c.getMateria().getNombre(), c.getNota()});
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
     private void armarDesplegableMaterias(){
         ArrayList<Materia> resultados = new ArrayList<>();
         resultados = md.obtenerMaterias();
+        
+        jCBMaterias.addItem(new Materia("Todas las materias"));
         for (Materia m : resultados){
-            System.out.println(m.getNombre());
+            //System.out.println(m.getNombre());
             jCBMaterias.addItem(m);
         }
     }
@@ -167,7 +181,6 @@ public class CursadasView extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBuscar;
     private javax.swing.JComboBox<Materia> jCBMaterias;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTFID;
