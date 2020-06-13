@@ -5,6 +5,8 @@
  */
 package universidad.vistas;
 
+import universidad.Conexion;
+
 /**
  *
  * @author Eourist
@@ -16,6 +18,7 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        new Conexion();
     }
 
     /**
@@ -82,13 +85,13 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(jMAlumnos);
 
         jMMaterias.setText("Materias");
-        jMMaterias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMMateriasActionPerformed(evt);
-            }
-        });
 
         jMIMateriasCursadas.setText("Ver cursadas");
+        jMIMateriasCursadas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIMateriasCursadasActionPerformed(evt);
+            }
+        });
         jMMaterias.add(jMIMateriasCursadas);
 
         jMIMateriasABM.setText("Administrar materias");
@@ -118,19 +121,39 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMIAlumnosCursadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAlumnosCursadasActionPerformed
-        // TODO add your handling code here:
+        jDesktop.removeAll();
+        jDesktop.repaint();
+        CursadasView cv = new CursadasView();
+        cv.setVisible(true);
+        jDesktop.add(cv);
+        jDesktop.moveToFront(cv);
     }//GEN-LAST:event_jMIAlumnosCursadasActionPerformed
 
     private void jMIAlumnosABMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAlumnosABMActionPerformed
-        // TODO add your handling code here:
+        jDesktop.removeAll();
+        jDesktop.repaint();
+        AlumnosView av = new AlumnosView();
+        av.setVisible(true);
+        jDesktop.add(av);
+        jDesktop.moveToFront(av);
     }//GEN-LAST:event_jMIAlumnosABMActionPerformed
 
-    private void jMMateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMMateriasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMMateriasActionPerformed
+    private void jMIMateriasCursadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIMateriasCursadasActionPerformed
+        jDesktop.removeAll();
+        jDesktop.repaint();
+        CursadasView cv = new CursadasView();
+        cv.setVisible(true);
+        jDesktop.add(cv);
+        jDesktop.moveToFront(cv);
+    }//GEN-LAST:event_jMIMateriasCursadasActionPerformed
 
     private void jMIMateriasABMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIMateriasABMActionPerformed
-        // TODO add your handling code here:
+        jDesktop.removeAll();
+        jDesktop.repaint();
+        MateriasView mv = new MateriasView();
+        mv.setVisible(true);
+        jDesktop.add(mv);
+        jDesktop.moveToFront(mv);
     }//GEN-LAST:event_jMIMateriasABMActionPerformed
     
     /**

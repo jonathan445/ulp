@@ -27,15 +27,27 @@ public class AlumnosView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLAlumnos = new javax.swing.JLabel();
+
+        jLAlumnos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLAlumnos.setText("Alumnos");
+        jLAlumnos.setAlignmentX(0.5F);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(jLAlumnos)
+                .addContainerGap(171, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLAlumnos)
+                .addContainerGap(250, Short.MAX_VALUE))
         );
 
         pack();
@@ -43,5 +55,6 @@ public class AlumnosView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLAlumnos;
     // End of variables declaration//GEN-END:variables
 }

@@ -46,14 +46,14 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Materias"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMMateriasActionPerformed"/>
-          </Events>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMIMateriasCursadas">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ver cursadas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMIMateriasCursadasActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMIMateriasABM">
               <Properties>

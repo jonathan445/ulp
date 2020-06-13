@@ -27,15 +27,26 @@ public class MateriasView extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLMaterias = new javax.swing.JLabel();
+
+        jLMaterias.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLMaterias.setText("Materias");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(172, 172, 172)
+                .addComponent(jLMaterias)
+                .addContainerGap(173, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLMaterias)
+                .addContainerGap(250, Short.MAX_VALUE))
         );
 
         pack();
@@ -43,5 +54,6 @@ public class MateriasView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLMaterias;
     // End of variables declaration//GEN-END:variables
 }
