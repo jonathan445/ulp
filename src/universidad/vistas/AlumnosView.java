@@ -187,11 +187,13 @@ public class AlumnosView extends javax.swing.JInternalFrame {
         Alumno alumno = new Alumno(nombre, fechaNac, activo);
         ad.altaAlumno(alumno);
         jtId.setText(alumno.getId()+"");
+        limpiar();
     }//GEN-LAST:event_btGuardarActionPerformed
 
     private void btBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBorrarActionPerformed
         int id = Integer.parseInt(jtId.getText());
         ad.bajaAlumno(id);
+        limpiar();
         
     }//GEN-LAST:event_btBorrarActionPerformed
 
@@ -203,17 +205,22 @@ public class AlumnosView extends javax.swing.JInternalFrame {
             boolean activo = jcActivo.isEnabled();
             Alumno alumno = new Alumno(nombre, fechaNac, activo);
             ad.actualizarAlumno(id, alumno);
+            limpiar();
             
         }
     }//GEN-LAST:event_btActualizarActionPerformed
 
     private void btLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimpiarActionPerformed
+       limpiar();
+    }//GEN-LAST:event_btLimpiarActionPerformed
+
+    public void limpiar(){
         jtId.setText("");
         jtNombre.setText("");
         jtFecha.setText("");
         jcActivo.setEnabled(false);
-    }//GEN-LAST:event_btLimpiarActionPerformed
-
+    }
+    
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
         int id = Integer.parseInt(jtId.getText());
         Alumno alumno = ad.obtenerAlumno(id);
