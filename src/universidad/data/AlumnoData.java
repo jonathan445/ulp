@@ -55,7 +55,7 @@ public class AlumnoData {
     
     public void actualizarAlumno(int id, Alumno alumno){
         try {
-            String sql = "UPDATE alumno SET nombre = " + alumno.getNombre() + ", fecNac = " + alumno.getFecNac() + " , activo = " + (alumno.getActivo() ? "1" : "0") + " WHERE id = " + id + ";";
+            String sql = "UPDATE alumno SET nombre = '" + alumno.getNombre() + "', fecNac = '" + alumno.getFecNac() + "' , activo = " + (alumno.getActivo() ? "1" : "0") + " WHERE id = " + id + ";";
             Statement s = Conexion.get().createStatement();
             s.execute(sql);
             

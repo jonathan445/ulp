@@ -164,19 +164,6 @@ public class CursadasView extends javax.swing.JInternalFrame {
         }
         jTable1.setModel(dtf);
     }
-    
-    
-    /*
-    ArrayList<Object> columnas = new ArrayList<Object>();
-        columnas.add("ID");
-        columnas.add("Nombre");
-        columnas.add("Nota");
-        
-        for(Object columna:columnas){
-            modelo.addColumn(columna);
-        }
-        jTAlumnos.setModel(modelo);
-    */
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBBuscar;
