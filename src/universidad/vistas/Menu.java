@@ -6,13 +6,19 @@
 package universidad.vistas;
 
 import universidad.Conexion;
+import java.awt.*;
 
 /**
  *
  * @author Eourist
  */
 public class Menu extends javax.swing.JFrame {
-
+    AlumnosView vAlumnos;
+    MateriasView vMaterias;
+    CursadasView vCursadas;
+    ListadoCursadasView vListaCursadas;
+    NotasCursadasView vNotasCursadas;
+    
     /**
      * Creates new form Menu
      */
@@ -34,11 +40,15 @@ public class Menu extends javax.swing.JFrame {
         jDesktop = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMAlumnos = new javax.swing.JMenu();
-        jMIAlumnosCursadas = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMIAlumnosABM = new javax.swing.JMenuItem();
         jMMaterias = new javax.swing.JMenu();
-        jMIMateriasCursadas = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMIMateriasABM = new javax.swing.JMenuItem();
+        jMCursadas = new javax.swing.JMenu();
+        jMIListaCursadas = new javax.swing.JMenuItem();
+        jMICursadasABM = new javax.swing.JMenuItem();
+        jMINotas = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -66,15 +76,10 @@ public class Menu extends javax.swing.JFrame {
 
         jMAlumnos.setText("Alumnos");
 
-        jMIAlumnosCursadas.setText("Ver cursadas");
-        jMIAlumnosCursadas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMIAlumnosCursadasActionPerformed(evt);
-            }
-        });
-        jMAlumnos.add(jMIAlumnosCursadas);
+        jMenuItem1.setText("Listado");
+        jMAlumnos.add(jMenuItem1);
 
-        jMIAlumnosABM.setText("Administrar alumnos");
+        jMIAlumnosABM.setText("Administrar");
         jMIAlumnosABM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMIAlumnosABMActionPerformed(evt);
@@ -86,15 +91,10 @@ public class Menu extends javax.swing.JFrame {
 
         jMMaterias.setText("Materias");
 
-        jMIMateriasCursadas.setText("Ver cursadas");
-        jMIMateriasCursadas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMIMateriasCursadasActionPerformed(evt);
-            }
-        });
-        jMMaterias.add(jMIMateriasCursadas);
+        jMenuItem2.setText("Listado");
+        jMMaterias.add(jMenuItem2);
 
-        jMIMateriasABM.setText("Administrar materias");
+        jMIMateriasABM.setText("Administrar");
         jMIMateriasABM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMIMateriasABMActionPerformed(evt);
@@ -103,6 +103,34 @@ public class Menu extends javax.swing.JFrame {
         jMMaterias.add(jMIMateriasABM);
 
         jMenuBar1.add(jMMaterias);
+
+        jMCursadas.setText("Cursadas");
+
+        jMIListaCursadas.setText("Listado");
+        jMIListaCursadas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIListaCursadasActionPerformed(evt);
+            }
+        });
+        jMCursadas.add(jMIListaCursadas);
+
+        jMICursadasABM.setText("Administrar");
+        jMICursadasABM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMICursadasABMActionPerformed(evt);
+            }
+        });
+        jMCursadas.add(jMICursadasABM);
+
+        jMINotas.setText("Calificaciones");
+        jMINotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMINotasActionPerformed(evt);
+            }
+        });
+        jMCursadas.add(jMINotas);
+
+        jMenuBar1.add(jMCursadas);
 
         setJMenuBar(jMenuBar1);
 
@@ -120,42 +148,38 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMIAlumnosCursadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAlumnosCursadasActionPerformed
-        jDesktop.removeAll();
-        jDesktop.repaint();
-        CursadasView cv = new CursadasView();
-        cv.setVisible(true);
-        jDesktop.add(cv);
-        jDesktop.moveToFront(cv);
-    }//GEN-LAST:event_jMIAlumnosCursadasActionPerformed
+    private void jMIMateriasABMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIMateriasABMActionPerformed
+        vMaterias = new MateriasView();
+        mostrarVentana(vMaterias);
+    }//GEN-LAST:event_jMIMateriasABMActionPerformed
+
+    private void jMIListaCursadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIListaCursadasActionPerformed
+        vListaCursadas = new ListadoCursadasView();
+        mostrarVentana(vListaCursadas);
+    }//GEN-LAST:event_jMIListaCursadasActionPerformed
 
     private void jMIAlumnosABMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAlumnosABMActionPerformed
-        jDesktop.removeAll();
-        jDesktop.repaint();
-        AlumnosView av = new AlumnosView();
-        av.setVisible(true);
-        jDesktop.add(av);
-        jDesktop.moveToFront(av);
+        vAlumnos = new AlumnosView();
+        mostrarVentana(vAlumnos);
     }//GEN-LAST:event_jMIAlumnosABMActionPerformed
 
-    private void jMIMateriasCursadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIMateriasCursadasActionPerformed
-        jDesktop.removeAll();
-        jDesktop.repaint();
-        CursadasView cv = new CursadasView();
-        cv.setVisible(true);
-        jDesktop.add(cv);
-        jDesktop.moveToFront(cv);
-    }//GEN-LAST:event_jMIMateriasCursadasActionPerformed
+    private void jMICursadasABMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMICursadasABMActionPerformed
+        vCursadas = new CursadasView();
+        mostrarVentana(vCursadas);
+    }//GEN-LAST:event_jMICursadasABMActionPerformed
 
-    private void jMIMateriasABMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIMateriasABMActionPerformed
-        jDesktop.removeAll();
-        jDesktop.repaint();
-        MateriasView mv = new MateriasView();
-        mv.setVisible(true);
-        jDesktop.add(mv);
-        jDesktop.moveToFront(mv);
-    }//GEN-LAST:event_jMIMateriasABMActionPerformed
+    private void jMINotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMINotasActionPerformed
+        vNotasCursadas = new NotasCursadasView();
+        mostrarVentana(vNotasCursadas);
+    }//GEN-LAST:event_jMINotasActionPerformed
     
+    private void mostrarVentana(Component c){
+        jDesktop.remove(c);
+        jDesktop.repaint();
+        jDesktop.add(c);
+        c.setVisible(true);
+        jDesktop.moveToFront(c);
+    }
     /**
      * @param args the command line arguments
      */
@@ -195,11 +219,15 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktop;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMAlumnos;
+    private javax.swing.JMenu jMCursadas;
     private javax.swing.JMenuItem jMIAlumnosABM;
-    private javax.swing.JMenuItem jMIAlumnosCursadas;
+    private javax.swing.JMenuItem jMICursadasABM;
+    private javax.swing.JMenuItem jMIListaCursadas;
     private javax.swing.JMenuItem jMIMateriasABM;
-    private javax.swing.JMenuItem jMIMateriasCursadas;
+    private javax.swing.JMenuItem jMINotas;
     private javax.swing.JMenu jMMaterias;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     // End of variables declaration//GEN-END:variables
 }

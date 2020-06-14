@@ -60,7 +60,6 @@ public class CursadaData {
         MateriaData md = new MateriaData();
         try {
             String sql = "SELECT * FROM cursada WHERE idAlumno = " + idAlumno + " AND idMateria = " + idMateria + ";";
-            System.out.println(sql);
             
             PreparedStatement statement = Conexion.get().prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
@@ -84,6 +83,34 @@ public class CursadaData {
         
         return cursadas;
     }
+    
+    public Cursada obtenerCursada(int idAlumno, int idMateria){
+        Cursada cursada = new Cursada();
+        
+        AlumnoData ad = new AlumnoData();
+        MateriaData md = new MateriaData();
+        try {
+            String sql = "SELECT * FROM cursada WHERE idAlumno = " + idAlumno + " AND idMateria = " + idMateria + ";";
+            
+            PreparedStatement statement = Conexion.get().prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            
+            while(resultSet.next()){
+                cursada.setId(resultSet.getInt("id"));
+                
+                cursada.setAlumno(ad.obtenerAlumno(resultSet.getInt("idAlumno")));
+                cursada.setMateria(md.obtenerMateria(resultSet.getInt("idMateria")));
+                cursada.setNota(resultSet.getInt("nota"));
+                break;
+            }   
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al obtener las cursadas: " + ex.getMessage());
+        }
+        
+        return cursada;
+    }
+    
     public List<Cursada> obtenerCursadasAlumno(int idAlumno){
         List<Cursada> cursadas = new ArrayList<>();
         

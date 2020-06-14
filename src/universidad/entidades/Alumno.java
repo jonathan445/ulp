@@ -67,11 +67,7 @@ public class Alumno {
     
     
     public String toString(){
-        
-        
-        return id+"-"+nombre;
-    
-        
+        return nombre;
     }
     
 }
