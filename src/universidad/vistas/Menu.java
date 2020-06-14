@@ -17,7 +17,6 @@ public class Menu extends javax.swing.JFrame {
     MateriasView vMaterias;
     CursadasView vCursadas;
     ListadoCursadasView vListaCursadas;
-    NotasCursadasView vNotasCursadas;
     
     /**
      * Creates new form Menu
@@ -48,7 +47,6 @@ public class Menu extends javax.swing.JFrame {
         jMCursadas = new javax.swing.JMenu();
         jMIListaCursadas = new javax.swing.JMenuItem();
         jMICursadasABM = new javax.swing.JMenuItem();
-        jMINotas = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -122,14 +120,6 @@ public class Menu extends javax.swing.JFrame {
         });
         jMCursadas.add(jMICursadasABM);
 
-        jMINotas.setText("Calificaciones");
-        jMINotas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMINotasActionPerformed(evt);
-            }
-        });
-        jMCursadas.add(jMINotas);
-
         jMenuBar1.add(jMCursadas);
 
         setJMenuBar(jMenuBar1);
@@ -167,14 +157,8 @@ public class Menu extends javax.swing.JFrame {
         vCursadas = new CursadasView();
         mostrarVentana(vCursadas);
     }//GEN-LAST:event_jMICursadasABMActionPerformed
-
-    private void jMINotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMINotasActionPerformed
-        vNotasCursadas = new NotasCursadasView();
-        mostrarVentana(vNotasCursadas);
-    }//GEN-LAST:event_jMINotasActionPerformed
     
     private void mostrarVentana(Component c){
-        jDesktop.remove(c);
         jDesktop.repaint();
         jDesktop.add(c);
         c.setVisible(true);
@@ -224,7 +208,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMICursadasABM;
     private javax.swing.JMenuItem jMIListaCursadas;
     private javax.swing.JMenuItem jMIMateriasABM;
-    private javax.swing.JMenuItem jMINotas;
     private javax.swing.JMenu jMMaterias;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;

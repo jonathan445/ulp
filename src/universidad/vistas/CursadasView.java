@@ -58,7 +58,7 @@ public class CursadasView extends javax.swing.JInternalFrame {
         jLabel1.setText("Alumno:");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Complete los datos para eliminar o registrar una nueva cursada");
+        jLabel2.setText("Complete los datos para eliminar, actualizar la nota o registrar una nueva cursada");
 
         jLabel3.setText("Materia:");
 
@@ -108,7 +108,7 @@ public class CursadasView extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -147,15 +147,25 @@ public class CursadasView extends javax.swing.JInternalFrame {
         Materia materia = md.obtenerMateria(idMateria);
         Alumno alumno = ad.obtenerAlumno(idAlumno);
         
-        Cursada nuevaCursada = new Cursada(alumno, materia, nota);
-        if (materia != null && alumno != null){
-            nuevaCursada = cd.altaCursada(nuevaCursada);
-        }
-        
-        if (nuevaCursada.getId() != -1){
-            jLMensaje.setText("¡Cursada guardada!");
+        Cursada cursadaExistente = cd.obtenerCursada(idAlumno, idMateria);
+        if (cursadaExistente.getId() != -1){
+            if (nota == cursadaExistente.getNota())
+                jLMensaje.setText("Error, la cursada ya existe");
+            else {
+                cd.actualizarCursada(idAlumno, idMateria, nota);
+                jLMensaje.setText("¡Se actualizó la nota de la cursada!");
+            }
         } else {
-            jLMensaje.setText("Ocurrió un error, no se pudo guardar");
+            Cursada nuevaCursada = new Cursada(alumno, materia, nota);
+            if (materia != null && alumno != null){
+                nuevaCursada = cd.altaCursada(nuevaCursada);
+            }
+
+            if (nuevaCursada.getId() != -1){
+                jLMensaje.setText("¡Cursada guardada!");
+            } else {
+                jLMensaje.setText("Error, datos ingresados invalidos");
+            }
         }
     }//GEN-LAST:event_jBGuardarActionPerformed
 
@@ -163,13 +173,16 @@ public class CursadasView extends javax.swing.JInternalFrame {
         int idMateria = ((Materia)jCBMaterias.getSelectedItem()).getId();
         int idAlumno = ((Alumno)jCBAlumnos.getSelectedItem()).getId();
         
-        Cursada cursadaExistente = cd.obtenerCursada(idAlumno, idMateria);
-        
-        if (cursadaExistente.getId() != -1){
-            cd.bajaCursada(idAlumno, idMateria);
-            jLMensaje.setText("¡Cursada eliminada!");
+        if (idMateria == -1 || idAlumno == -1){
+            jLMensaje.setText("Error, datos ingresados invalidos");
         } else {
-            jLMensaje.setText("Ocurrió un error, no se pudo eliminar");
+            Cursada cursadaExistente = cd.obtenerCursada(idAlumno, idMateria);
+            if (cursadaExistente.getId() != -1){
+                cd.bajaCursada(idAlumno, idMateria);
+                jLMensaje.setText("¡Cursada eliminada!");
+            } else {
+                jLMensaje.setText("Error, la cursada no existe");
+            }
         }
     }//GEN-LAST:event_jBBorrarActionPerformed
     
