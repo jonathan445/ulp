@@ -169,6 +169,7 @@ public class MateriasView extends javax.swing.JInternalFrame {
             String nombre = jtNombre.getText();
             Materia materia = new Materia(nombre);
             md.actualizarMateria(id, materia);
+            System.out.println(id);
             limpiar();
             
         }

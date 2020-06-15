@@ -73,7 +73,7 @@ public class MateriaData {
     
     public void actualizarMateria(int id, Materia materia){
         try {
-            String sql = "UPDATE materia SET nombre = " + materia.getNombre() + " WHERE id = " + id + ";";
+            String sql = "UPDATE materia SET nombre = '" + materia.getNombre() + "' WHERE id = " + id + ";";
             Statement s = Conexion.get().createStatement();
             s.execute(sql);
             
