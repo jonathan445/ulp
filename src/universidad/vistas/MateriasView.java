@@ -44,9 +44,6 @@ public class MateriasView extends javax.swing.JInternalFrame {
         btGuardar = new javax.swing.JButton();
 
         setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
 
         jLMaterias.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLMaterias.setText("Materias");

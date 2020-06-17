@@ -50,9 +50,6 @@ public class AlumnosView extends javax.swing.JInternalFrame {
         btLimpiar = new javax.swing.JButton();
 
         setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
 
         jLAlumnos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLAlumnos.setText("Alumnos");
