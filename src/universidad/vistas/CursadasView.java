@@ -71,7 +71,7 @@ public class CursadasView extends javax.swing.JInternalFrame {
             }
         });
 
-        jCBNotas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        jCBNotas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin nota", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 
         jLMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLMensaje.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -142,7 +142,13 @@ public class CursadasView extends javax.swing.JInternalFrame {
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
         int idMateria = ((Materia)jCBMaterias.getSelectedItem()).getId();
         int idAlumno = ((Alumno)jCBAlumnos.getSelectedItem()).getId();
-        int nota = Integer.parseInt(jCBNotas.getSelectedItem().toString());
+        
+        int nota = 0;
+        try{
+            nota = Integer.parseInt(jCBNotas.getSelectedItem().toString());
+        } catch (NumberFormatException e){
+            nota = 0;
+        }
         
         Materia materia = md.obtenerMateria(idMateria);
         Alumno alumno = ad.obtenerAlumno(idAlumno);

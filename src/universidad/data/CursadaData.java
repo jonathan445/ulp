@@ -10,7 +10,12 @@ public class CursadaData {
 
     public Cursada altaCursada(Cursada cursada){
         try {
-            String sql = "INSERT INTO cursada (IDMATERIA, IDALUMNO, NOTA) VALUES (" + cursada.getMateria().getId() + " , " + cursada.getAlumno().getId() + ", " + cursada.getNota() + ");";
+            String sql;
+            if (cursada.getNota() != 0)
+                sql = "INSERT INTO cursada (IDMATERIA, IDALUMNO, NOTA) VALUES (" + cursada.getMateria().getId() + " , " + cursada.getAlumno().getId() + ", " + cursada.getNota() + ");";
+            else
+                sql = "INSERT INTO cursada (IDMATERIA, IDALUMNO) VALUES (" + cursada.getMateria().getId() + " , " + cursada.getAlumno().getId() + ");";
+            
             Statement s = Conexion.get().createStatement();
             s.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS); 
             ResultSet rs = s.getGeneratedKeys();

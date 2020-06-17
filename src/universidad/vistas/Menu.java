@@ -39,10 +39,8 @@ public class Menu extends javax.swing.JFrame {
         jDesktop = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMAlumnos = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMIAlumnosABM = new javax.swing.JMenuItem();
         jMMaterias = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMIMateriasABM = new javax.swing.JMenuItem();
         jMCursadas = new javax.swing.JMenu();
         jMIListaCursadas = new javax.swing.JMenuItem();
@@ -74,9 +72,6 @@ public class Menu extends javax.swing.JFrame {
 
         jMAlumnos.setText("Alumnos");
 
-        jMenuItem1.setText("Listado");
-        jMAlumnos.add(jMenuItem1);
-
         jMIAlumnosABM.setText("Administrar");
         jMIAlumnosABM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,9 +83,6 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(jMAlumnos);
 
         jMMaterias.setText("Materias");
-
-        jMenuItem2.setText("Listado");
-        jMMaterias.add(jMenuItem2);
 
         jMIMateriasABM.setText("Administrar");
         jMIMateriasABM.addActionListener(new java.awt.event.ActionListener() {
@@ -210,7 +202,5 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMIMateriasABM;
     private javax.swing.JMenu jMMaterias;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     // End of variables declaration//GEN-END:variables
 }

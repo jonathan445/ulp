@@ -136,8 +136,10 @@ public class ListadoCursadasView extends javax.swing.JInternalFrame {
         }
         
         for (Cursada c : resultados){
-            System.out.println(c.getAlumno().getNombre());
-            dtf.addRow(new Object[]{c.getAlumno().getNombre(), c.getMateria().getNombre(), c.getNota()});
+            if (c.getNota() != 0)
+                dtf.addRow(new Object[]{c.getAlumno().getNombre(), c.getMateria().getNombre(), c.getNota()});
+            else 
+                dtf.addRow(new Object[]{c.getAlumno().getNombre(), c.getMateria().getNombre(), ""});
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
     private void armarDesplegableMaterias(){
